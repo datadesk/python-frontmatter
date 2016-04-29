@@ -42,9 +42,9 @@ class YAMLHandler(BaseHandler):
 
     def load(self, fm, Loader=None):
         if Loader:
-            return yaml.safe_load(fm, Loader=Loader)
+            return yaml.load(fm, Loader=Loader)
         else:
-            return yaml.safe_load(fm)
+            return yaml.load(fm)
 
 
 class JSONHandler(BaseHandler):
