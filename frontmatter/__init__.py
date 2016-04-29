@@ -51,6 +51,9 @@ def parse(text, **defaults):
     # ensure unicode first
     text = u(text).strip()
 
+    # Pop out of the kwargs
+    loader = defaults.pop("Loader", None)
+
     # metadata starts with defaults
     metadata = defaults.copy()
 
@@ -69,7 +72,7 @@ def parse(text, **defaults):
         return metadata, text
 
     # parse, now that we have frontmatter
-    fm = handler.load(fm)
+    fm = handler.load(fm, Loader=loader)
     if isinstance(fm, dict):
         metadata.update(fm)
 
@@ -117,7 +120,7 @@ def dumps(post, **kwargs):
     """
     kwargs.setdefault('Dumper', SafeDumper)
     kwargs.setdefault('default_flow_style', False)
-    
+
     start_delimiter = kwargs.pop('start_delimiter', '---')
     end_delimiter = kwargs.pop('end_delimiter', '---')
 
@@ -133,7 +136,7 @@ def dumps(post, **kwargs):
 class Post(object):
     """
     A post contains content and metadata from Front Matter.
-    For convenience, metadata values are available as proxied item lookups. 
+    For convenience, metadata values are available as proxied item lookups.
 
     Don't use this class directly. Use module-level functions load, dump, etc.
     """
@@ -143,7 +146,7 @@ class Post(object):
 
     def __getitem__(self, name):
         "Get metadata key"
-        return self.metadata[name]        
+        return self.metadata[name]
 
     def __setitem__(self, name, value):
         "Set a metadata key"
@@ -181,4 +184,3 @@ class Post(object):
         d = self.metadata.copy()
         d['content'] = self.content
         return d
-

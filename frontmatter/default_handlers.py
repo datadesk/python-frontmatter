@@ -23,7 +23,7 @@ class BaseHandler(object):
             raise NotImplementedError('No frontmatter boundary defined. '
                 'Please set {}.FM_BOUNDARY to a regular expression'.format(self.__class__.__name__))
 
-    def load(self, fm):
+    def load(self, fm, Loader=None):
         """
         Parse frontmatter and return a dict
         """
@@ -40,15 +40,17 @@ class BaseHandler(object):
 class YAMLHandler(BaseHandler):
     FM_BOUNDARY = re.compile(r'^-{3,}$', re.MULTILINE)
 
-    def load(self, fm):
-        return yaml.safe_load(fm)
-
+    def load(self, fm, Loader=None):
+        if Loader:
+            return json.loads(fm, Loader=Loader)
+        else:
+            return json.loads(fm)
 
 
 class JSONHandler(BaseHandler):
     FM_BOUNDARY = re.compile(r'^(?:{|})$', re.MULTILINE)
 
-    def load(self, fm):
+    def load(self, fm, Loader=None):
         return json.loads(fm)
 
     def split(self, text):
@@ -60,7 +62,7 @@ if toml:
     class TOMLHandler(BaseHandler):
         FM_BOUNDARY = re.compile(r'^\+{3,}$', re.MULTILINE)
 
-        def load(self, fm):
+        def load(self, fm, Loader=None):
             return toml.loads(fm)
 
 else:
