@@ -116,7 +116,7 @@ class FrontmatterTest(unittest.TestCase):
         dump = frontmatter.dumps(post,
             start_delimiter='+++',
             end_delimiter='+++')
-        
+
         self.assertTrue('+++' in dump)
 
     def test_toml(self):
@@ -147,7 +147,7 @@ dummy content"""
 
         # and a custom handler that really doesn't do anything
         class DummyHandler(object):
-            def load(self, fm):
+            def load(self, fm, Loader=None):
                 return {'value': fm}
 
             def split(self, text):
