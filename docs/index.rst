@@ -1,38 +1,58 @@
+.. Frontmatter documentation master file, created by
+   sphinx-quickstart on Thu Jul 21 21:54:42 2016.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
 Python Frontmatter
-==================
+=====================
 
-[Jekyll](http://jekyllrb.com/)-style YAML front matter offers a useful way to add arbitrary, structured metadata to text documents, regardless of type.
+.. module:: frontmatter
 
-This is a small package to load and parse files (or just text) with YAML front matter.
+`Jekyll <http://jekyllrb.com/>`__-style YAML front matter offers a
+useful way to add arbitrary, structured metadata to text documents,
+regardless of type.
 
-[![Build Status](https://travis-ci.org/eyeseast/python-frontmatter.svg?branch=master)](https://travis-ci.org/eyeseast/python-frontmatter)
+This is a small package to load and parse files (or just text) with YAML
+front matter.
 
-Install:
+
+Install
 --------
+
+::
 
     pip install python-frontmatter
 
-
-Usage:
+Usage
 ------
+
+::
 
     >>> import frontmatter
 
 Load a post from a filename:
 
+::
+
     >>> post = frontmatter.load('tests/hello-world.markdown')
 
 Or a file (or file-like object):
+
+::
 
     >>> with open('tests/hello-world.markdown') as f:
     ...     post = frontmatter.load(f)
 
 Or load from text:
 
+::
+
     >>> with open('tests/hello-world.markdown') as f:
     ...     post = frontmatter.loads(f.read())
 
 Access content:
+
+::
 
     >>> print(post.content)
     Well, hello there, world.
@@ -41,13 +61,16 @@ Access content:
     >>> print(post)
     Well, hello there, world.
 
-
 Use metadata (metadata gets proxied as post keys):
+
+::
 
     >>> print(post['title'])
     Hello, world!
 
 Metadata is a dictionary, with some handy proxies:
+
+::
 
     >>> sorted(post.keys())
     ['layout', 'title']
@@ -59,6 +82,8 @@ Metadata is a dictionary, with some handy proxies:
 
 If you don't need the whole post object, just parse:
 
+::
+
     >>> with open('tests/hello-world.markdown') as f:
     ...     metadata, content = frontmatter.parse(f.read())
     >>> print(metadata['title'])
@@ -66,7 +91,9 @@ If you don't need the whole post object, just parse:
 
 Write back to plain text, too:
 
-    >>> print(frontmatter.dumps(post)) # doctest: +NORMALIZE_WHITESPACE
+::
+
+    >>> print(frontmatter.dumps(post))
     ---
     excerpt: tl;dr
     layout: post
@@ -76,10 +103,12 @@ Write back to plain text, too:
 
 Or write to a file (or file-like object):
 
+::
+
     >>> from io import BytesIO
     >>> f = BytesIO()
     >>> frontmatter.dump(post, f)
-    >>> print(f.getvalue().decode('utf-8')) # doctest: +NORMALIZE_WHITESPACE
+    >>> print(f.getvalue())
     ---
     excerpt: tl;dr
     layout: post
@@ -87,4 +116,18 @@ Or write to a file (or file-like object):
     ---
     Well, hello there, world.
 
+
+.. toctree::
+   :maxdepth: 2
+
+   handlers
+   api
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 

@@ -1,7 +1,7 @@
 +++
-test = "tester"
 author = "bob"
 something = "else"
+test = "tester"
 +++
 
 Title
@@ -15,4 +15,4 @@ Hello.
 Just need three dashes
 ---
 
-And this might break.
+And this shouldn't break.
